@@ -19,8 +19,7 @@ public enum Role {
         return role;
     }
 
-
-    public static enum Permission  {
+    public static enum Permission {
         SERVICE_DETAILS("service.details", Role.SERVICE),
         SERVICE_LOGIN("service.login", Role.SERVICE),
         SERVICE_REGISTER("service.register", Role.SERVICE),
@@ -28,7 +27,11 @@ public enum Role {
 
         USER_WRITE("user.write", Role.USER),
 
-        USER_DELETE("user.delete", Role.USER);
+        USER_DELETE("user.delete", Role.USER),
+
+        CHAT_CREATE("chat.create", Role.USER),
+        CHAT_READ("chat.read", Role.USER),
+        CHAT_UPDATE("chat.update", Role.USER);
 
 
         private final String permission;
@@ -57,5 +60,5 @@ public enum Role {
             }
             return permissions;
         }
-    }
+        }
 }

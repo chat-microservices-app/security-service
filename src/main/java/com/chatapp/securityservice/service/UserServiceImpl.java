@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Loading user details for username: {}", username);
-        return userMapper.userDetailsTransferToUser(userManagementServerRestClient.loadUserDetails(username, "Bearer " +
+        return userMapper.userDetailsTransferToUser(userManagementServerRestClient.loadUserDetails(username, "bearer " +
                 generateTempAccessToken(username)));
     }
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
                 .registrationFormToAuthorizationForm(registrationForm);
         authorizationForm.setPassword(encodedPassword);
         return userMapper.userDetailsTransferToUser(userManagementServerRestClient
-                .registerUser(authorizationForm, "Bearer " +
+                .registerUser(authorizationForm, "bearer " +
                         generateTempAccessToken(registrationForm.getUsername())));
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         LoginForm loginFormWithEncodedPassword = new LoginForm(
                 loginForm.username(), passwordEncoder.encode(loginForm.password()));
         return userMapper.userDetailsTransferToUser(userManagementServerRestClient
-                .login(loginFormWithEncodedPassword, "Bearer " +
+                .login(loginFormWithEncodedPassword, "bearer " +
                         generateTempAccessToken(loginForm.username())));
     }
 

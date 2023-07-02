@@ -116,6 +116,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public Optional<User> validateToken(String token) {
         try {
+            if(token.startsWith("bearer ")) token = token.substring(7);
             Jwt jwt = accessTokenDecoder.decode(token);
             if (Objects.requireNonNull(jwt.getExpiresAt()).isAfter(Instant.now())) {
                 return Optional.of(getUserFromToken(token));
