@@ -5,18 +5,20 @@ import java.util.List;
 import java.util.Objects;
 
 public enum Role {
-    SERVICE("ROLE_SERVICE"),
 
-    USER("ROLE_USER");
+    PREFIX("ROLE_"),
+    SERVICE("SERVICE"),
 
-    private final String role;
+    USER("USER");
 
-    Role(String role) {
-        this.role = role;
+    private final String label;
+
+    Role(String label) {
+        this.label = label;
     }
 
-    public String getRole() {
-        return role;
+    public String getLabel() {
+        return label;
     }
 
     public static enum Permission {

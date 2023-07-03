@@ -1,6 +1,7 @@
 package com.chatapp.securityservice.service;
 
 import com.chatapp.securityservice.config.client.UserManagementServerRestClient;
+import com.chatapp.securityservice.config.rest.RestProperties;
 import com.chatapp.securityservice.enums.Role;
 import com.chatapp.securityservice.web.dto.AuthorizationForm;
 import com.chatapp.securityservice.web.dto.LoginForm;
@@ -30,20 +31,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Loading user details for username: {}", username);
-        return userMapper.userDetailsTransferToUser(userManagementServerRestClient.loadUserDetails(username, "bearer " +
-                generateTempAccessToken(username)));
+        return userMapper.userDetailsTransferToUser(userManagementServerRestClient.loadUserDetails(username,
+                RestProperties.TOKEN_PREFIX + generateTempAccessToken(username)));
     }
 
     @Override
     public UserDetails createUser(RegistrationForm registrationForm) {
         String encodedPassword = passwordEncoder.encode(registrationForm.getPassword());
-
         AuthorizationForm authorizationForm = userMapper
                 .registrationFormToAuthorizationForm(registrationForm);
         authorizationForm.setPassword(encodedPassword);
         return userMapper.userDetailsTransferToUser(userManagementServerRestClient
-                .registerUser(authorizationForm, "bearer " +
-                        generateTempAccessToken(registrationForm.getUsername())));
+                .registerUser(authorizationForm,
+                        RestProperties.TOKEN_PREFIX + generateTempAccessToken(registrationForm.getUsername())));
     }
 
     @Override
@@ -51,12 +51,12 @@ public class UserServiceImpl implements UserService {
         LoginForm loginFormWithEncodedPassword = new LoginForm(
                 loginForm.username(), passwordEncoder.encode(loginForm.password()));
         return userMapper.userDetailsTransferToUser(userManagementServerRestClient
-                .login(loginFormWithEncodedPassword, "bearer " +
+                .login(loginFormWithEncodedPassword, RestProperties.TOKEN_PREFIX +
                         generateTempAccessToken(loginForm.username())));
     }
 
     protected String generateTempAccessToken(String username) {
-        return jwtService.generateTempAccessToken(username, Role.SERVICE.getRole() + " " +
+        return jwtService.generateTempAccessToken(username, Role.PREFIX.getLabel() + Role.SERVICE.getLabel() + " " +
                         Role.Permission.getAllPermissionsByRoleType(Role.SERVICE)
                                 .stream()
                                 .map(String::strip)

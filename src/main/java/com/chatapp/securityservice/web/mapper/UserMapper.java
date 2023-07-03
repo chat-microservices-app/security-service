@@ -32,7 +32,7 @@ public interface UserMapper {
 
 
     default String setUpRoles() {
-        return Role.USER.getRole() + " " + Role.Permission.getAllPermissionsByRoleType(Role.USER)
+        return Role.PREFIX.getLabel() + Role.USER.getLabel() + " " + Role.Permission.getAllPermissionsByRoleType(Role.USER)
                 .stream()
                 .map(String::strip)
                 .collect(Collectors.joining(" "));

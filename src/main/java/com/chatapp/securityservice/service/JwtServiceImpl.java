@@ -1,6 +1,8 @@
 package com.chatapp.securityservice.service;
 
 
+import com.chatapp.securityservice.config.rest.RestProperties;
+import com.chatapp.securityservice.enums.Role;
 import com.chatapp.securityservice.model.User;
 import com.chatapp.securityservice.web.dto.Token;
 import lombok.RequiredArgsConstructor;
@@ -72,7 +74,8 @@ public class JwtServiceImpl implements JwtService {
                 .map(String::new)
                 .collect(joining(" "));
         log.debug("roleScope: {}" , scope);
-        JwtClaimsSet claimsSet = generateJwtClaimSet(authentication.getName(), scope, ChronoUnit.SECONDS, accessTokenExpirationSecond);
+        JwtClaimsSet claimsSet = generateJwtClaimSet(authentication.getName(), scope, ChronoUnit.SECONDS,
+                accessTokenExpirationSecond);
         return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
     }
 
@@ -82,7 +85,8 @@ public class JwtServiceImpl implements JwtService {
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(joining(" "));
-        JwtClaimsSet claimsSet = generateJwtClaimSet(authentication.getName(), scope, ChronoUnit.SECONDS, refreshTokenExpirationSecond);
+        JwtClaimsSet claimsSet = generateJwtClaimSet(authentication.getName(), scope, ChronoUnit.SECONDS,
+                refreshTokenExpirationSecond);
         return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
     }
 
@@ -116,11 +120,11 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public Optional<User> validateToken(String token) {
         try {
-            if(token.startsWith("bearer ")) token = token.substring(7);
+            if(token.startsWith(RestProperties.TOKEN_PREFIX)) token = token.substring(7);
             Jwt jwt = accessTokenDecoder.decode(token);
             if (Objects.requireNonNull(jwt.getExpiresAt()).isAfter(Instant.now())) {
                 return Optional.of(getUserFromToken(token));
-            }else {
+            } else {
                 throw new IllegalArgumentException("Token Expired");
             }
         } catch (JwtException e) {

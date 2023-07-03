@@ -1,6 +1,7 @@
 package com.chatapp.securityservice.config.security;
 
 
+import com.chatapp.securityservice.config.rest.RestProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,7 @@ public class WebSecurityConfig {
     private final String ALLOW_ALL_ENDPOINTS = "/**";
 
     @Bean
-    public SecurityFilterChain securityFilterChain( HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(authorizeRequestRegistry ->
@@ -57,7 +58,6 @@ public class WebSecurityConfig {
                         httpSecurityOAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults())
                 );
 
-
         http.headers(httpSecurityHeadersConfigurer ->
                 httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
         );
@@ -68,7 +68,7 @@ public class WebSecurityConfig {
     private String[] allowedGetEndpoints() {
         return new String[]{
                 SPRING_ACTUATOR_PATH + ALLOW_ALL_ENDPOINTS,
-                "/api/v1/auth" + ALLOW_ALL_ENDPOINTS,
+                RestProperties.ROOT +  ALLOW_ALL_ENDPOINTS,
                 "/swagger-ui.html" + ALLOW_ALL_ENDPOINTS,
                 "/swagger-ui" + ALLOW_ALL_ENDPOINTS,
                 "/v3/api-docs" + ALLOW_ALL_ENDPOINTS,
