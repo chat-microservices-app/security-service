@@ -1,6 +1,5 @@
 package com.chatapp.securityservice.service;
 
-import com.chatapp.securityservice.model.User;
 import com.chatapp.securityservice.web.dto.LoginForm;
 import com.chatapp.securityservice.web.dto.RegistrationForm;
 import com.chatapp.securityservice.web.dto.Token;

@@ -1,7 +1,9 @@
 package com.chatapp.securityservice.web.dto;
 
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 

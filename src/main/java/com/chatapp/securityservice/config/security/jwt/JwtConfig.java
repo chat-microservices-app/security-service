@@ -1,7 +1,6 @@
 package com.chatapp.securityservice.config.security.jwt;
 
 
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -81,7 +80,5 @@ public class JwtConfig {
         provider.setJwtAuthenticationConverter(jwtAuthenticationConverter());
         return provider;
     }
-
-
 
 }

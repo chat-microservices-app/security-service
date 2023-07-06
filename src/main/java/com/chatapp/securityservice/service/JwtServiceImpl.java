@@ -2,7 +2,6 @@ package com.chatapp.securityservice.service;
 
 
 import com.chatapp.securityservice.config.rest.RestProperties;
-import com.chatapp.securityservice.enums.Role;
 import com.chatapp.securityservice.model.User;
 import com.chatapp.securityservice.web.dto.Token;
 import lombok.RequiredArgsConstructor;
@@ -149,7 +148,7 @@ public class JwtServiceImpl implements JwtService {
             Instant expiresAt = jwt.getExpiresAt();
             Duration duration = Duration.between(Instant.now(), expiresAt);
             long daysUntilExpired = duration.toDays();
-            if (daysUntilExpired < 1) { // generate new refresh token if the current one is about to expire in 2 days
+            if (daysUntilExpired < 1) { // generate new refresh token if the current one is about to expire in 1 day
                 refreshToken = generateRefreshToken(authentication);
             } else {
                 refreshToken = jwt.getTokenValue();
