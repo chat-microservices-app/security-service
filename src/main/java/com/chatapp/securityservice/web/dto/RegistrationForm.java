@@ -19,7 +19,6 @@ public class RegistrationForm {
             message = "Username must be between 5 and 100 characters")
     String username;
 
-
     @NotNull @NotEmpty @NotBlank
     String password;
 
@@ -35,13 +34,16 @@ public class RegistrationForm {
 
     Date dateOfBirth;
 
-    public RegistrationForm(String username, String password, String firstName, String lastName, String email, Date dateOfBirth) {
+    String pictureUrl;
+
+    public RegistrationForm(@NotNull String username, @NotNull String password, String firstName, String lastName, String email, Date dateOfBirth, String pictureUrl) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.pictureUrl = pictureUrl;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.chatapp.securityservice.web.dto;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,8 @@ public class AuthorizationForm  extends RegistrationForm {
 
     String roles;
 
-    public AuthorizationForm(String username, String password, String firstName, String lastName, String email, Date date, String roles) {
-        super(username, password, firstName, lastName, email, date);
+    public AuthorizationForm(@NotNull String username, @NotNull String password, String firstName, String lastName, String email, Date dateOfBirth, String pictureUrl, String roles) {
+        super(username, password, firstName, lastName, email, dateOfBirth, pictureUrl);
         this.roles = roles;
     }
 }
