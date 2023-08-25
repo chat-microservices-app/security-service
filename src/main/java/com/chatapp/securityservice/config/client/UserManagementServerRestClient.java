@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 
-@FeignClient(name = "${user-management-service.name}")
+@FeignClient(name = "${user-management-service.name}", url = "${user-management-service.url}")
 public interface UserManagementServerRestClient {
 
     final String BASE_URL = RestProperties.ROOT + "/v1" + RestProperties.USER.USER;

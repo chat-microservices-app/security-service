@@ -23,7 +23,7 @@
 
     <groupId>com.chatapp</groupId>
     <artifactId>securityservice</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-K8S-SNAPSHOT</version>
     <name>security-service</name>
     <description>security-service</description>
     <properties>
@@ -37,10 +37,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,10 +96,16 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        <!-- to enable config server and eureka discovery; migrating to k8s -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-config</artifactId>-->
+        <!--        </dependency>-->
+        <!-- to enable config server and eureka discovery; migrating to k8s -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

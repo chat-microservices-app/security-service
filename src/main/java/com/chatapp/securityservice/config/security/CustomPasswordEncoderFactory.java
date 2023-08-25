@@ -14,7 +14,7 @@ import java.util.Map;
 public class CustomPasswordEncoderFactory {
 
     public static PasswordEncoder createDelegatingPasswordEncoder() {
-        String encodingId = "bcrypt";
+        String encodingId = "bcrypt12";
         Map<String, PasswordEncoder> encoders = new HashMap<>();
         encoders.put(encodingId, new BCryptPasswordEncoder(12));
         encoders.put("bcrypt15", new BCryptPasswordEncoder(15));
