@@ -6,6 +6,8 @@ import com.chatapp.securityservice.model.User;
 import com.chatapp.securityservice.web.dto.Token;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.kafka.common.security.oauthbearer.internals.unsecured.OAuthBearerIllegalTokenException;
+import org.apache.kafka.common.security.oauthbearer.internals.unsecured.OAuthBearerValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -124,11 +126,11 @@ public class JwtServiceImpl implements JwtService {
             if (Objects.requireNonNull(jwt.getExpiresAt()).isAfter(Instant.now())) {
                 return Optional.of(getUserFromToken(token));
             } else {
-                throw new IllegalArgumentException("Token Expired");
+                throw new OAuthBearerIllegalTokenException(OAuthBearerValidationResult.newFailure("Token expired"));
             }
         } catch (JwtException e) {
             //TODO add better exception handling
-            throw new IllegalArgumentException("Invalid Token");
+            throw new OAuthBearerIllegalTokenException(OAuthBearerValidationResult.newFailure(e.getMessage()));
         }
     }
 
